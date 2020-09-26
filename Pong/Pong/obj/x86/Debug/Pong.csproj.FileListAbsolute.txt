@@ -21,3 +21,6 @@ C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\bin\Windows\x86\Debug\Sharp
 C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\obj\x86\Debug\Pong.csproj.CopyComplete
 C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\obj\x86\Debug\Pong.exe
 C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\obj\x86\Debug\Pong.pdb
+C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\bin\Windows\x86\Debug\Content\bal.xnb
+C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\bin\Windows\x86\Debug\Content\blauweSpeler.xnb
+C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\bin\Windows\x86\Debug\Content\rodeSpeler.xnb
