@@ -5,11 +5,18 @@ using Microsoft.Xna.Framework.Input;
 
 class BasicGame : Game
 {
+    //sorry voor de magic numbers, maar dit soort opdrachten zijn gewoon veel sneller met wat hardcode
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch; 
     Texture2D blauweSpeler, rodeSpeler, bal;
-    Vector2 ballPosition, blauweSpelerPosition, rodeSpelerPosition;
+    Vector2 ballPosition, blauweSpelerPosition, rodeSpelerPosition, ballSpeed;
     float paddleSpeed=10;
+    //bandaid way of generating a random decimal instead of integer
+    float totalBallSpeed =500;
+    float actualTotalBallSpeed;
+    Random random;
+    int randomMod;
+    int ballOffset = 3;
     [STAThread]
     static void Main()
     {
@@ -19,9 +26,11 @@ class BasicGame : Game
 
     public BasicGame()
     {
+        actualTotalBallSpeed = totalBallSpeed / 100;
         Content.RootDirectory = "Content";
         graphics = new GraphicsDeviceManager(this);
-  
+
+
     }
 
     protected override void LoadContent()
@@ -30,14 +39,37 @@ class BasicGame : Game
         blauweSpeler = Content.Load<Texture2D>("blauweSpeler");
         rodeSpeler = Content.Load<Texture2D>("rodeSpeler");
         bal = Content.Load<Texture2D>("bal");
+        BallSetup();
+    }
+
+    protected void BallSetup()
+    {
         ballPosition = new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2);
-        blauweSpelerPosition = new Vector2(0, graphics.PreferredBackBufferHeight / 2-blauweSpeler.Height/2);
+        blauweSpelerPosition = new Vector2(0, graphics.PreferredBackBufferHeight / 2 - blauweSpeler.Height / 2);
         rodeSpelerPosition = new Vector2(graphics.PreferredBackBufferWidth - rodeSpeler.Width, graphics.PreferredBackBufferHeight / 2 - rodeSpeler.Height / 2);
+        random = new Random();
+        randomMod = random.Next(-1000, 1000);
+        ballSpeed.Y = (float)random.Next((int)-totalBallSpeed, (int)totalBallSpeed) / 150;
+        if (ballSpeed.Y >= 0)
+            ballSpeed.X = (actualTotalBallSpeed - ballSpeed.Y);
+        if (ballSpeed.Y < 0)
+            ballSpeed.X = (actualTotalBallSpeed + ballSpeed.Y);
+        if (randomMod <= 0)
+        {
+            ballSpeed.X *= -1;
+        }
+        Console.WriteLine(ballSpeed);
     }
 
     protected override void Update(GameTime gameTime)
     {
+
+        ballPosition += ballSpeed;
         KeyboardState keyboardState = Keyboard.GetState();
+
+
+
+        //input/////////////////////////////////////////////////////////////////////////////
         if (rodeSpelerPosition.Y + rodeSpeler.Height < graphics.PreferredBackBufferHeight)
         {
             if (keyboardState.IsKeyDown(Keys.L))
@@ -65,6 +97,90 @@ class BasicGame : Game
             {
                 blauweSpelerPosition.Y += paddleSpeed;
             }
+        }
+        //collision//////////////////////////////////////////////////////////////////////////////
+        if (ballPosition.Y < 0)
+        {
+            ballPosition.Y = 0;
+            ballSpeed.Y *= -1;
+        }
+        if (ballPosition.Y > graphics.PreferredBackBufferHeight - bal.Height)
+        {
+            ballPosition.Y = graphics.PreferredBackBufferHeight - bal.Height;
+            ballSpeed.Y *= -1;
+        }
+        if (ballPosition.X < 0)
+        {
+            //GAME OVER STATE ALS LEVENS OP ZIJN
+            BallSetup();
+
+
+        }
+        if (ballPosition.X > graphics.PreferredBackBufferWidth - bal.Width)
+        {
+            //GAME OVER STATE
+            BallSetup();
+
+        }
+
+        if (ballPosition.X + bal.Width > rodeSpelerPosition.X)
+        {
+            if (ballPosition.Y + bal.Height > rodeSpelerPosition.Y)
+            {
+                if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3)
+                {
+                    ballPosition.X = rodeSpelerPosition.X - bal.Width;
+                    ballSpeed.X *= -1.1f;
+                    ballSpeed.Y -= ballOffset;
+                }
+                else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3 * 2)
+                {
+                    ballPosition.X = rodeSpelerPosition.X - bal.Width;
+                    ballSpeed.X *= -1.1f;
+
+                }
+                else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height)
+                {
+                    ballPosition.X = rodeSpelerPosition.X - bal.Width;
+                    ballSpeed.X *= -1.1f;
+                    ballSpeed.Y += ballOffset;
+                }
+            }
+
+        }
+        if (ballPosition.X < blauweSpelerPosition.X + blauweSpeler.Width)
+        {
+            if (ballPosition.Y + bal.Height > blauweSpelerPosition.Y)
+            {
+                if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3)
+                {
+                    ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
+                    ballSpeed.X *= -1.1f;
+                    ballSpeed.Y -= ballOffset;
+                }
+                else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3 * 2)
+                {
+                    ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
+                    ballSpeed.X *= -1.1f;
+
+                }
+                else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
+                {
+                    ballPosition.X = blauweSpelerPosition.X  +blauweSpeler.Width;
+                    ballSpeed.X *= -1.1f;
+                    ballSpeed.Y += ballOffset;
+                }
+            }
+
+        }
+
+        if (ballPosition.X  < blauweSpelerPosition.X+blauweSpeler.Width && 
+            ballPosition.Y + bal.Height > blauweSpelerPosition.Y &&
+            ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
+        {
+            ballPosition.X = blauweSpelerPosition.X+blauweSpeler.Width;
+            ballSpeed.X *= -1.1f;
+
         }
     }
 
