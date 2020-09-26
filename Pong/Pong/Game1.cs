@@ -31,3 +31,24 @@ class BasicGame : Game
         GraphicsDevice.Clear(Color.White);
     }
 }
+class Ball
+{
+    public Ball()
+    {
+
+    }
+}
+class Paddle
+{
+    public Paddle()
+    {
+
+    }
+}
+class Life
+{
+    public Life()
+    {
+
+    }
+}
