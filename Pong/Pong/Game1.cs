@@ -34,11 +34,13 @@ class Pong : Game
 
     protected override void Update(GameTime gameTime)
     {
+
     }
 
     protected override void Draw(GameTime gameTime)
     {
         GraphicsDevice.Clear(Color.White);
+
     }
 }
 class Ball
@@ -58,8 +60,23 @@ class Paddle
 }
 class Life
 {
+    Life p1 = new Life();
+    Life p2 = new Life();
+
+    public int count;
+
+
     public Life()
     {
-
+        
     }
+    public void reset()
+    {
+        this.count = 3;
+    }
+    public void subtract()
+    {
+        this.count -= lives;
+    }
+    
 }
