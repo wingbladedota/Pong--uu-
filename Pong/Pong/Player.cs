@@ -17,6 +17,8 @@ namespace Pong
 
         public string direction;
 
+        private Vector2 WindowSize = Pong.WindowSize;
+
         private byte life;
         public byte Life
         { get { return life; } set { if (value <= 255) life = value; } }
@@ -44,7 +46,7 @@ namespace Pong
             if (direction == "down")
             {
                 newPos = this.Position.Y - this.Speed;
-                if (newPos >= WindowSize.Y)// check if player within bounds
+                if (newPos >= Pong.WindowSize.Y)// check if player within bounds
                 {
                     this.Position.Y = newPos;
                     return true;

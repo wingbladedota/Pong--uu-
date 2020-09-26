@@ -20,10 +20,10 @@ namespace Pong
   
 
         public Color Background { get; private set; }
-        public Vector2 WindowSize = new Vector2(600,600);
+        public Vector2 WindowSize;
+        public Vector2 center;
 
-        public Vector2 center = new Vector2(WindowSize.X/2, WindowSize.Y/2);
-        public Vector2 center = new Vector2(WindowSize / 2);
+
 
         public SoundEffect errorSound;
 
@@ -39,15 +39,12 @@ namespace Pong
             Content.RootDirectory = "Content";
             graphics = new GraphicsDeviceManager(this);
             Background = Color.White;
-
+            WindowSize = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
+            center = new Vector2(WindowSize.X / 2, WindowSize.Y / 2);
         }
 
         protected override void LoadContent()
         {
-            int windowWidth = graphics.PreferredBackBufferWidth;
-
-            
-
             spriteBatch = new SpriteBatch(GraphicsDevice);
             p2.sprite = Content.Load<Texture2D>("blauweSpeler");
             p1.sprite = Content.Load<Texture2D>("rodeSpeler");
