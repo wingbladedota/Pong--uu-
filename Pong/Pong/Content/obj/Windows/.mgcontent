@@ -4,13 +4,9 @@
   <Platform>Windows</Platform>
   <Config />
   <SourceFiles>
-    <File>C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/bal.png</File>
-    <File>C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/blauweSpeler.png</File>
-    <File>C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/rodeSpeler.png</File>
+    <File>C:/Users/admin/Documents/GitHub/Pong--uu-/Pong/Pong/Content/bal.png</File>
+    <File>C:/Users/admin/Documents/GitHub/Pong--uu-/Pong/Pong/Content/blauweSpeler.png</File>
+    <File>C:/Users/admin/Documents/GitHub/Pong--uu-/Pong/Pong/Content/rodeSpeler.png</File>
+    <File>C:/Users/admin/Documents/GitHub/Pong--uu-/Pong/Pong/Content/game_over.spritefont</File>
   </SourceFiles>
-  <DestFiles>
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-    <File xsi:nil="true" />
-  </DestFiles>
 </SourceFileCollection>
