@@ -7,7 +7,7 @@ namespace Pong
     {
         public Texture2D sprite;
         public float Speed { get; protected set; }
-        public Vector2 Position { get; set; }
-        public Vector2 Size { get; set; }
+        public Vector2 Position;
+        public Vector2 Size;
     }
 }

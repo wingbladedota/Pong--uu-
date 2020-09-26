@@ -24,3 +24,7 @@ C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\obj\x86\Debug\Pong.pdb
 C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\bin\Windows\x86\Debug\Content\bal.xnb
 C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\bin\Windows\x86\Debug\Content\blauweSpeler.xnb
 C:\Users\mnoplbnaikj\Desktop\huiswerk\Pong\Pong\Pong\bin\Windows\x86\Debug\Content\rodeSpeler.xnb
+C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\obj\x86\Debug\Pong.csprojAssemblyReference.cache
+C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\obj\x86\Debug\Pong.csproj.CoreCompileInputs.cache
+C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\obj\x86\Debug\Pong.exe
+C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\obj\x86\Debug\Pong.pdb

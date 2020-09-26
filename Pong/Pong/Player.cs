@@ -15,11 +15,11 @@ namespace Pong
     {
         public Vector2 Size { get; set; }
 
-        public enum direction { up, down }
+        public string direction;
 
-
+        private byte life;
         public byte Life
-        { get; set { if (value <= 255) Life = value; } }
+        { get { return life; } set { if (value <= 255) life = value; } }
 
         public bool isAlive
         {
@@ -28,7 +28,6 @@ namespace Pong
                 if (Life == 0) return false;
                 else return true;
             }
-            private set;
         }
 
         public void reset()
@@ -38,25 +37,25 @@ namespace Pong
         }
         public void lose() { this.Life--; }
 
-        public bool move(direction)
+        public bool move(string direction)
         {
             float newPos;
             float deepestPoint;
-            if (direction == down)
+            if (direction == "down")
             {
                 newPos = this.Position.Y - this.Speed;
-                if (newPos >= windowSize.Y)// check if player within bounds
+                if (newPos >= WindowSize.Y)// check if player within bounds
                 {
                     this.Position.Y = newPos;
                     return true;
                 }
                 else return false;
             }
-            else if (direction == up)
+            else if (direction == "up")
             {
                 newPos = this.Position.Y + this.Speed;
                 deepestPoint = newPos + this.Size.Y;
-                if (deepestPoint <= windowSize.Y)// check if player within bounds
+                if (deepestPoint <= WindowSize.Y)// check if player within bounds
                 {
                     this.Position.Y = newPos;
                     return true;

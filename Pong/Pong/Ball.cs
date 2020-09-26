@@ -12,10 +12,9 @@ namespace Pong
 {
     class Ball : GameObject
     {
-        public Ball(Pong game)
+        public Ball()
         {
             Speed = 1;
-            Position = new Vector2(game.center);
         }
 
     }

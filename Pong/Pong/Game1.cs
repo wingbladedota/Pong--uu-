@@ -17,12 +17,15 @@ namespace Pong
         Player p2 = new Player();
 
         Ball ball = new Ball();
-
-
+  
 
         public Color Background { get; private set; }
-        public Vector2 windowSize { get; private set; } = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);//returns the playablefield windowSize
-        public Vector2 center = new Vector2(windowSize / 2);
+        public Vector2 WindowSize = new Vector2();
+        Vector2 WindowSize(600, 600);
+        float height = WindowSize.Y;
+
+        public Vector2 center = new Vector2(this.WindowSize.X/2.0, WindowSize.Y / 2);
+
 
         public SoundEffect errorSound;
 
@@ -32,23 +35,28 @@ namespace Pong
             Pong game = new Pong();
             game.Run();
         }
-
+        
         public Pong()
         {
             Content.RootDirectory = "Content";
             graphics = new GraphicsDeviceManager(this);
             Background = Color.White;
+
         }
 
         protected override void LoadContent()
         {
+            int windowWidth = graphics.PreferredBackBufferWidth;
+
+            
+
             spriteBatch = new SpriteBatch(GraphicsDevice);
             p2.sprite = Content.Load<Texture2D>("blauweSpeler");
             p1.sprite = Content.Load<Texture2D>("rodeSpeler");
             ball.sprite = Content.Load<Texture2D>("bal");
-            ball.Position = new Vector2(WindowSize / 2);
+            ball.Position = center;
             p2.Position = new Vector2(0, WindowSize.Y / 2 - p2.Size.Y / 2);
-            p1.Position = new Vector2(WindowSize - p1.Size.X, WindowSize.Y / 2 - p1.Size.Y / 2);
+            p1.Position = new Vector2(WindowSize.X - p1.Size.X, WindowSize.Y / 2 - p1.Size.Y / 2);
 
         }
 
@@ -59,19 +67,19 @@ namespace Pong
 
             if (keyboardState.IsKeyDown(Keys.Up))
             {
-                movingError = p1.move(up);
+                movingError = p1.move("up");
             }
             if (keyboardState.IsKeyDown(Keys.Down))
             {
-                movingError = p1.move(down);
+                movingError = p1.move("down");
             }
             if (keyboardState.IsKeyDown(Keys.W))
             {
-                movingError = p2.move(up);
+                movingError = p2.move("up");
             }
             if (keyboardState.IsKeyDown(Keys.S))
             {
-                movingError = p2.move(down);
+                movingError = p2.move("down");
             }
             if (movingError) { Console.Beep(); }
         }
@@ -83,16 +91,22 @@ namespace Pong
             spriteBatch.Draw(ball.sprite, ball.Position);
             spriteBatch.Draw(p1.sprite, p1.Position);
             spriteBatch.Draw(p2.sprite, p2.Position);
+            DrawLives(p1);
+            DrawLives(p2);
             spriteBatch.End();
-            public void DrawLives(Player player)
+
+
+            
+
+        }
+        public void DrawLives(Player player)
+        {
+            byte lives = player.Life;
+            byte i;
+            for (i = 1; i <= lives; i++)
             {
-                byte i;
-                for (i = 1, i <= player.Life, i++)
-                {
 
-                }
             }
-
         }
     }
 
