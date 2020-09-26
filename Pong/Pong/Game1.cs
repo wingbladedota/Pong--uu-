@@ -2,81 +2,99 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Audio;
 
-class Pong : Game
+
+namespace Pong
 {
-    GraphicsDeviceManager graphics;
-    SpriteBatch spriteBatch; 
-    Texture2D blauweSpeler, rodeSpeler, bal;
-
-
-    [STAThread]
-    static void Main()
+    class Pong : Game
     {
-        Pong game = new Pong();
-        game.Run();
+        GraphicsDeviceManager graphics;
+        SpriteBatch spriteBatch;
+
+
+        Player p1 = new Player();
+        Player p2 = new Player();
+
+        Ball ball = new Ball();
+
+
+
+        public Color Background { get; private set; }
+        public Vector2 windowSize { get; private set; } = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);//returns the playablefield windowSize
+        public Vector2 center = new Vector2(windowSize / 2);
+
+        public SoundEffect errorSound;
+
+        [STAThread]
+        static void Main()
+        {
+            Pong game = new Pong();
+            game.Run();
+        }
+
+        public Pong()
+        {
+            Content.RootDirectory = "Content";
+            graphics = new GraphicsDeviceManager(this);
+            Background = Color.White;
+        }
+
+        protected override void LoadContent()
+        {
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            p2.sprite = Content.Load<Texture2D>("blauweSpeler");
+            p1.sprite = Content.Load<Texture2D>("rodeSpeler");
+            ball.sprite = Content.Load<Texture2D>("bal");
+            ball.Position = new Vector2(WindowSize / 2);
+            p2.Position = new Vector2(0, WindowSize.Y / 2 - p2.Size.Y / 2);
+            p1.Position = new Vector2(WindowSize - p1.Size.X, WindowSize.Y / 2 - p1.Size.Y / 2);
+
+        }
+
+        protected override void Update(GameTime gameTime)
+        {
+            KeyboardState keyboardState = Keyboard.GetState();
+            bool movingError = false;
+
+            if (keyboardState.IsKeyDown(Keys.Up))
+            {
+                movingError = p1.move(up);
+            }
+            if (keyboardState.IsKeyDown(Keys.Down))
+            {
+                movingError = p1.move(down);
+            }
+            if (keyboardState.IsKeyDown(Keys.W))
+            {
+                movingError = p2.move(up);
+            }
+            if (keyboardState.IsKeyDown(Keys.S))
+            {
+                movingError = p2.move(down);
+            }
+            if (movingError) { Console.Beep(); }
+        }
+
+        protected override void Draw(GameTime gameTime)
+        {
+            GraphicsDevice.Clear(Color.White);
+            spriteBatch.Begin();
+            spriteBatch.Draw(ball.sprite, ball.Position);
+            spriteBatch.Draw(p1.sprite, p1.Position);
+            spriteBatch.Draw(p2.sprite, p2.Position);
+            spriteBatch.End();
+            public void DrawLives(Player player)
+            {
+                byte i;
+                for (i = 1, i <= player.Life, i++)
+                {
+
+                }
+            }
+
+        }
     }
 
-    public Pong()
-    {
-        Content.RootDirectory = "Content";
-        graphics = new GraphicsDeviceManager(this);
-    }
-
-    protected override void LoadContent()
-    {
-        spriteBatch = new SpriteBatch(GraphicsDevice);
-        blauweSpeler = Content.Load<Texture2D>("blauweSpeler");
-        rodeSpeler = Content.Load<Texture2D>("rodeSpeler");
-        bal = Content.Load<Texture2D>("bal");
-
-    }
-
-    protected override void Update(GameTime gameTime)
-    {
-
-    }
-
-    protected override void Draw(GameTime gameTime)
-    {
-        GraphicsDevice.Clear(Color.White);
-
-    }
 }
-class Ball
-{
-    public Ball()
-    {
 
-    }
-
-}
-class Paddle
-{
-    public Paddle()
-    {
-
-    }
-}
-class Life
-{
-    Life p1 = new Life();
-    Life p2 = new Life();
-
-    public int count;
-
-
-    public Life()
-    {
-        
-    }
-    public void reset()
-    {
-        this.count = 3;
-    }
-    public void subtract()
-    {
-        this.count -= lives;
-    }
-    
-}
