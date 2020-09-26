@@ -1,0 +1,4 @@
+Source File,Dest File,Processor Type,Content Type,Source File Size,Dest File Size,Build Seconds
+"C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/bal.png","C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/bin/Windows/Content/bal.xnb","TextureProcessor","Texture2DContent",635,1109,0,1007304
+"C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/blauweSpeler.png","C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/bin/Windows/Content/blauweSpeler.xnb","TextureProcessor","Texture2DContent",550,6229,0,0029923
+"C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/rodeSpeler.png","C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/bin/Windows/Content/rodeSpeler.xnb","TextureProcessor","Texture2DContent",551,6229,0,0019946
