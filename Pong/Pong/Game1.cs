@@ -20,12 +20,10 @@ namespace Pong
   
 
         public Color Background { get; private set; }
-        public Vector2 WindowSize = new Vector2();
-        Vector2 WindowSize(600, 600);
-        float height = WindowSize.Y;
+        public Vector2 WindowSize = new Vector2(600,600);
 
-        public Vector2 center = new Vector2(this.WindowSize.X/2.0, WindowSize.Y / 2);
-
+        public Vector2 center = new Vector2(WindowSize.X/2, WindowSize.Y/2);
+        public Vector2 center = new Vector2(WindowSize / 2);
 
         public SoundEffect errorSound;
 
