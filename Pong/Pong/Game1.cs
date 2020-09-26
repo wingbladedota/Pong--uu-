@@ -17,6 +17,11 @@ class BasicGame : Game
     Random random;
     int randomMod;
     int ballOffset = 3;
+
+    byte rodespelerlevens = 3;
+    byte b
+
+
     [STAThread]
     static void Main()
     {
