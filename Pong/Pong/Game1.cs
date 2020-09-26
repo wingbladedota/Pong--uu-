@@ -3,7 +3,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-class BasicGame : Game
+class Pong : Game
 {
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch; 
@@ -13,11 +13,11 @@ class BasicGame : Game
     [STAThread]
     static void Main()
     {
-        BasicGame game = new BasicGame();
+        Pong game = new Pong();
         game.Run();
     }
 
-    public BasicGame()
+    public Pong()
     {
         Content.RootDirectory = "Content";
         graphics = new GraphicsDeviceManager(this);
@@ -47,6 +47,7 @@ class Ball
     {
 
     }
+
 }
 class Paddle
 {
