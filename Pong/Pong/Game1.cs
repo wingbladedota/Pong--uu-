@@ -2,12 +2,9 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using Pong;
 
 class BasicGame : Game
 {
-    //Als de game groter was, dan had ik een gameobject en spritegameobject class gemaakt waarvan ik de spelers, ballen, en levens zou laten inheriten, maar het maken van die classes
-    //kost meer tijd dan het maken van de hele game op deze manier.
     //sorry voor de magic numbers, maar dit soort opdrachten zijn gewoon veel sneller met wat hardcode
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
@@ -22,16 +19,27 @@ class BasicGame : Game
     // GameState
     int GameState;// Start = -1, Playing = 0, GameOver = 1
 
-    int ballOffset = 3;//de y-snelheid die je de bal meegeeft als je hem op het randje van je paddle raakt
+    int ballOffset = 3;
 
-    int rodespelerlevens = 3;
-    int blauwespelerlevens = 3;
+    int rodespelerlevens;
+    int blauwespelerlevens;
+
+    int spelerlevens = 3;
 
     string mesStart = "Press (SPACE) to continue";//message to display at start of the game
     string mesGameOver = "GAME OVER";//message to display at end of the game
-    string mesHasWon = " has defeated it's opponent";//win message
+    string mesHasWon = " has defeated his opponent";//win message
     string mesPlayer; // var to store the winning player
-    Color mesColor;
+    string outmes; // outputmessage of winning player
+    Color mesColor;// messageColor of winning player
+
+
+    float ballwidth;//store the width of the ball to be able to draw the lives next to each other
+    Vector2 startmesloc;//the location to draw the text of GameState-1
+    Vector2 gameovermesloc;//the location to draw the "GameOver" of GameState1
+    Vector2 winmesloc;//the location to draw the winmessage of GameState1
+    Vector2 nextbluelifepos;//location of the next life of blue
+    Vector2 nextredlifepos;//location of the next life of red
 
 
     SpriteFont font; // store the font to be used for messages
@@ -49,7 +57,7 @@ class BasicGame : Game
         actualTotalBallSpeed = totalBallSpeed / 100;
         Content.RootDirectory = "Content";
         graphics = new GraphicsDeviceManager(this);
-        
+
 
     }
 
@@ -61,7 +69,8 @@ class BasicGame : Game
         rodeSpeler = Content.Load<Texture2D>("rodeSpeler");
         bal = Content.Load<Texture2D>("bal");
         font = Content.Load<SpriteFont>("gameover");
-        BallSetup();//de functie die de positie van de paddles, bal, en de richting van de bal geeft. Dat de peddles ook resetten is bewust gedaan
+
+        BallSetup();
     }
 
     protected void BallSetup()
@@ -80,8 +89,15 @@ class BasicGame : Game
         {
             ballSpeed.X *= -1;
         }
-        
+
     }
+
+    public Vector2 stringsize(SpriteFont font, string text)
+    {
+        Vector2 size = font.MeasureString(text);
+        return size;
+    }
+
 
     protected override void Update(GameTime gameTime)
     {
@@ -90,6 +106,19 @@ class BasicGame : Game
         KeyboardState keyboardState = Keyboard.GetState();
 
 
+
+        ballwidth = bal.Width;//store the width of the ball to be able to draw the lives next to each other
+        startmesloc = new Vector2(
+            (graphics.PreferredBackBufferWidth - stringsize(font, mesStart).X) / 2,
+            (graphics.PreferredBackBufferHeight - stringsize(font, mesStart).Y) / 2);//the location to draw the text of GameState-1
+        gameovermesloc = new Vector2(
+            (graphics.PreferredBackBufferWidth - stringsize(font, mesGameOver).X) / 2,
+            graphics.PreferredBackBufferHeight / 2 - stringsize(font, mesGameOver).Y);//the location to draw the "GameOver" of GameState1
+
+
+
+        nextbluelifepos = new Vector2(0, 0);//location of the next life of blue
+        nextredlifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);//location of the next life of red
 
         //input/////////////////////////////////////////////////////////////////////////////
         if (rodeSpelerPosition.Y + rodeSpeler.Height < graphics.PreferredBackBufferHeight)
@@ -133,6 +162,7 @@ class BasicGame : Game
         }
         if (ballPosition.X < 0)
         {
+            //GAME OVER STATE ALS LEVENS OP ZIJN
             blauwespelerlevens--;
             BallSetup();
 
@@ -140,6 +170,7 @@ class BasicGame : Game
         }
         if (ballPosition.X > graphics.PreferredBackBufferWidth - bal.Width)
         {
+            //GAME OVER STATE
             rodespelerlevens--;
             BallSetup();
 
@@ -152,19 +183,19 @@ class BasicGame : Game
                 if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
+                    ballSpeed.X *= -1.1f;
                     ballSpeed.Y -= ballOffset;
                 }
                 else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3 * 2)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
+                    ballSpeed.X *= -1.1f;
 
                 }
                 else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
+                    ballSpeed.X *= -1.1f;
                     ballSpeed.Y += ballOffset;
                 }
             }
@@ -177,19 +208,19 @@ class BasicGame : Game
                 if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
+                    ballSpeed.X *= -1.1f;
                     ballSpeed.Y -= ballOffset;
                 }
                 else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3 * 2)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
+                    ballSpeed.X *= -1.1f;
 
                 }
                 else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
+                    ballSpeed.X *= -1.1f;
                     ballSpeed.Y += ballOffset;
                 }
             }
@@ -201,7 +232,7 @@ class BasicGame : Game
             ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
         {
             ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-            ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
+            ballSpeed.X *= -1.1f;
 
         }
         if (rodespelerlevens < 0 || blauwespelerlevens < 0)
@@ -243,7 +274,7 @@ class BasicGame : Game
     {
         if (GameState == -1) //draw the BEGINstate
         {
-            
+
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
             spriteBatch.DrawString(font, mesStart, startmesloc, Color.Black);
@@ -284,6 +315,4 @@ class BasicGame : Game
             spriteBatch.End();
         }
     }
-
-    //hello
 }
