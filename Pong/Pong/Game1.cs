@@ -13,34 +13,25 @@ class BasicGame : Game
     SpriteBatch spriteBatch;
     Texture2D blauweSpeler, rodeSpeler, bal;
     Vector2 ballPosition, blauweSpelerPosition, rodeSpelerPosition, ballSpeed;
-    float paddleSpeed = 10; //snelheid van de paddles
-    float totalBallSpeed = 500;    //bandaid way of generating a random decimal instead of integer
-    float actualTotalBallSpeed; 
+    float paddleSpeed = 10;
+    //bandaid way of generating a random decimal instead of integer
+    float totalBallSpeed = 500;
+    float actualTotalBallSpeed;
     Random random;
-    int randomMod; //zodat de snelheid zowel positief als negatief kan zijn
+    int randomMod;
+    // GameState
     int GameState;// Start = -1, Playing = 0, GameOver = 1
 
     int ballOffset = 3;//de y-snelheid die je de bal meegeeft als je hem op het randje van je paddle raakt
 
-    int rodespelerlevens;
-    int blauwespelerlevens;
-
-    int spelerlevens = 3;
+    int rodespelerlevens = 3;
+    int blauwespelerlevens = 3;
 
     string mesStart = "Press (SPACE) to continue";//message to display at start of the game
     string mesGameOver = "GAME OVER";//message to display at end of the game
     string mesHasWon = " has defeated it's opponent";//win message
     string mesPlayer; // var to store the winning player
-    string outmes; // outputmessage of winning player
-    Color mesColor;// messageColor of winning player
-
-
-    float ballwidth;//store the width of the ball to be able to draw the lives next to each other
-    Vector2 startmesloc;//the location to draw the text of GameState-1
-    Vector2 gameovermesloc;//the location to draw the "GameOver" of GameState1
-    Vector2 winmesloc;//the location to draw the winmessage of GameState1
-    Vector2 nextbluelifepos;//location of the next life of blue
-    Vector2 nextredlifepos;//location of the next life of red
+    Color mesColor;
 
 
     SpriteFont font; // store the font to be used for messages
@@ -80,8 +71,7 @@ class BasicGame : Game
         rodeSpelerPosition = new Vector2(graphics.PreferredBackBufferWidth - rodeSpeler.Width, graphics.PreferredBackBufferHeight / 2 - rodeSpeler.Height / 2);
         random = new Random();
         randomMod = random.Next(-1000, 1000);
-        ballSpeed.Y = (float)random.Next((int)-totalBallSpeed, (int)totalBallSpeed) / 150; //de Y heeft een random snelheid, en de x krijgt "wat over is" en dan random of het positief of
-        //negatief is
+        ballSpeed.Y = (float)random.Next((int)-totalBallSpeed, (int)totalBallSpeed) / 150;
         if (ballSpeed.Y >= 0)
             ballSpeed.X = (actualTotalBallSpeed - ballSpeed.Y);
         if (ballSpeed.Y < 0)
@@ -90,15 +80,8 @@ class BasicGame : Game
         {
             ballSpeed.X *= -1;
         }
-
+        
     }
-
-    public Vector2 stringsize(SpriteFont font, string text)
-    {
-        Vector2 size = font.MeasureString(text);
-        return size;
-    }
-
 
     protected override void Update(GameTime gameTime)
     {
@@ -106,20 +89,7 @@ class BasicGame : Game
         ballPosition += ballSpeed;
         KeyboardState keyboardState = Keyboard.GetState();
 
-        
 
-        ballwidth = bal.Width;//store the width of the ball to be able to draw the lives next to each other
-        startmesloc = new Vector2(
-            (graphics.PreferredBackBufferWidth - stringsize(font, mesStart).X) / 2,
-            (graphics.PreferredBackBufferHeight - stringsize(font, mesStart).Y) / 2);//the location to draw the text of GameState-1
-        gameovermesloc = new Vector2(
-            (graphics.PreferredBackBufferWidth - stringsize(font, mesGameOver).X) / 2,
-            graphics.PreferredBackBufferHeight / 2 - stringsize(font, mesGameOver).Y);//the location to draw the "GameOver" of GameState1
-        
-        
-        
-        nextbluelifepos = new Vector2(0, 0);//location of the next life of blue
-        nextredlifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);//location of the next life of red
 
         //input/////////////////////////////////////////////////////////////////////////////
         if (rodeSpelerPosition.Y + rodeSpeler.Height < graphics.PreferredBackBufferHeight)
