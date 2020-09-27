@@ -242,9 +242,6 @@ class BasicGame : Game
             Color mesColor = Color.Blue;
         }
         string outmes = mesPlayer + mesHasWon; // put together the final message
-
-
-
     }
 
     protected override void Draw(GameTime gameTime)
@@ -271,13 +268,13 @@ class BasicGame : Game
             {
                 spriteBatch.Draw(bal, nextbluelifepos); //draw the next life at it's position
                 nextbluelifepos = new Vector2(nextbluelifepos.X + ballwidth, 0); // calculate the next position
-
+                Console.WriteLine("nextbluelifepos:" + nextbluelifepos);
             }
-
             for (int i = 0; i < rodespelerlevens; i++)
             {
                 spriteBatch.Draw(bal, nextredlifepos);
                 nextredlifepos = new Vector2(nextredlifepos.X - ballwidth, 0); //calculate the next position in reverse X
+                Console.WriteLine("nextredlifepos:" + nextredlifepos);
             }
             spriteBatch.End();
         }
@@ -290,9 +287,9 @@ class BasicGame : Game
             spriteBatch.DrawString(font, "GAME OVER", gameovermesloc, Color.White);
             spriteBatch.DrawString(font, outmes, winmesloc, mesColor); // draw the haswon message on screen
 
-            Console.WriteLine(mesColor);
-            Console.WriteLine(outmes);
-            Console.WriteLine(winmesloc);
+            Console.WriteLine("mesColor:" + mesColor);
+            Console.WriteLine("outMes:" + outmes);
+            Console.WriteLine("winmesloc:" + winmesloc);
             spriteBatch.End();
             // doIExist
         }
