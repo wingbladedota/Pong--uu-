@@ -107,6 +107,82 @@ namespace Pong
             }
         }
     }
+    class Player : Pong
+    {
+        public Vector2 Size { get; set; }
 
+        public string direction;
+
+        public Texture2D sprite;
+        public float Speed { get; protected set; }
+        public Vector2 Position;
+
+        private byte life;
+        public byte Life
+        { get { return life; } set { if (value <= 255) life = value; } }
+
+        public bool isAlive
+        {
+            get
+            {
+                if (Life == 0) return false;
+                else return true;
+            }
+        }
+
+        public void reset()
+        {
+            this.Life = 3;
+            this.Position = new Vector2(0, 0);
+        }
+        public void lose() { this.Life--; }
+
+        public bool move(string direction)
+        {
+            float newPos;
+            float deepestPoint;
+            if (direction == "down")
+            {
+                newPos = this.Position.Y - this.Speed;
+                if (newPos >= WindowSize.Y)// check if player within bounds
+                {
+                    this.Position.Y = newPos;
+                    return true;
+                }
+                else return false;
+            }
+            else if (direction == "up")
+            {
+                newPos = this.Position.Y + this.Speed;
+                deepestPoint = newPos + this.Size.Y;
+                if (deepestPoint <= WindowSize.Y)// check if player within bounds
+                {
+                    this.Position.Y = newPos;
+                    return true;
+                }
+                else return false;
+            }
+            else return false;
+        }
+
+        public Player()
+        {
+            this.Speed = 10.0f;
+            this.Position = new Vector2(0, 0);
+
+        }
+    }
+    class Ball : Pong
+    {
+        public Texture2D sprite;
+        public float Speed { get; protected set; }
+        public Vector2 Position;
+        public Vector2 Size;
+        public Ball()
+        {
+            Speed = 1;
+        }
+
+    }
 }
 
