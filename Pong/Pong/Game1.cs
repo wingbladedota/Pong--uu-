@@ -5,21 +5,22 @@ using Microsoft.Xna.Framework.Input;
 
 class BasicGame : Game
 {
+    //Als de game groter was, dan had ik een gameobject en spritegameobject class gemaakt waarvan ik de spelers, ballen, en levens zou laten inheriten, maar het maken van die classes
+    //kost meer tijd dan het maken van de hele game op deze manier.
     //sorry voor de magic numbers, maar dit soort opdrachten zijn gewoon veel sneller met wat hardcode
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
     Texture2D blauweSpeler, rodeSpeler, bal;
     Vector2 ballPosition, blauweSpelerPosition, rodeSpelerPosition, ballSpeed;
-    float paddleSpeed = 10;
-    //bandaid way of generating a random decimal instead of integer
-    float totalBallSpeed = 500;
+    float paddleSpeed = 10; //snelheid van de paddles
+    float totalBallSpeed = 500;    //bandaid way of generating a random decimal instead of integer
     float actualTotalBallSpeed;
     Random random;
-    int randomMod;
+    int randomMod;//zodat de snelheid zowel positief als negatief kan zijn
     // GameState
     int GameState;// Start = -1, Playing = 0, GameOver = 1
 
-    int ballOffset = 3;
+    int ballOffset = 3;//de y-snelheid die je de bal meegeeft als je hem op het randje van je paddle raakt
 
     int rodespelerlevens;
     int blauwespelerlevens;
@@ -70,7 +71,8 @@ class BasicGame : Game
         bal = Content.Load<Texture2D>("bal");
         font = Content.Load<SpriteFont>("gameover");
 
-        BallSetup();
+        BallSetup();//de functie die de positie van de paddles, bal, en de richting van de bal geeft. Dat de peddles ook resetten is bewust gedaan
+
     }
 
     protected void BallSetup()
@@ -80,7 +82,7 @@ class BasicGame : Game
         rodeSpelerPosition = new Vector2(graphics.PreferredBackBufferWidth - rodeSpeler.Width, graphics.PreferredBackBufferHeight / 2 - rodeSpeler.Height / 2);
         random = new Random();
         randomMod = random.Next(-1000, 1000);
-        ballSpeed.Y = (float)random.Next((int)-totalBallSpeed, (int)totalBallSpeed) / 150;
+        ballSpeed.Y = (float)random.Next((int)-totalBallSpeed, (int)totalBallSpeed) / 150; //de Y heeft een random snelheid, en de x krijgt "wat over is" en dan random of het positief of negatief is
         if (ballSpeed.Y >= 0)
             ballSpeed.X = (actualTotalBallSpeed - ballSpeed.Y);
         if (ballSpeed.Y < 0)
@@ -92,7 +94,7 @@ class BasicGame : Game
 
     }
 
-    public Vector2 stringsize(SpriteFont font, string text)
+    public Vector2 stringsize(SpriteFont font, string text)//return the size of a string dawn on screen
     {
         Vector2 size = font.MeasureString(text);
         return size;
@@ -160,18 +162,16 @@ class BasicGame : Game
             ballPosition.Y = graphics.PreferredBackBufferHeight - bal.Height;
             ballSpeed.Y *= -1;
         }
-        if (ballPosition.X < 0)
+        if (ballPosition.X < 0)//if ball touches leftside
         {
-            //GAME OVER STATE ALS LEVENS OP ZIJN
-            blauwespelerlevens--;
+            blauwespelerlevens--;//subtract blue player lives
             BallSetup();
 
 
         }
-        if (ballPosition.X > graphics.PreferredBackBufferWidth - bal.Width)
+        if (ballPosition.X > graphics.PreferredBackBufferWidth - bal.Width)//if ball touches rightside
         {
-            //GAME OVER STATE
-            rodespelerlevens--;
+            rodespelerlevens--;//subtract red player lives
             BallSetup();
 
         }
@@ -183,19 +183,19 @@ class BasicGame : Game
                 if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y -= ballOffset;
                 }
                 else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3 * 2)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
 
                 }
                 else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y += ballOffset;
                 }
             }
@@ -208,19 +208,19 @@ class BasicGame : Game
                 if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y -= ballOffset;
                 }
                 else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3 * 2)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
 
                 }
                 else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y += ballOffset;
                 }
             }
@@ -232,7 +232,7 @@ class BasicGame : Game
             ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
         {
             ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-            ballSpeed.X *= -1.1f;
+            ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
 
         }
         if (rodespelerlevens < 0 || blauwespelerlevens < 0)
@@ -251,8 +251,8 @@ class BasicGame : Game
         {
             if (rodespelerlevens > blauwespelerlevens)// who has won?; set values accordingly
             {
-                mesPlayer = "RED";
-                mesColor = Color.Red;
+                mesPlayer = "RED";//string to indicate red has won
+                mesColor = Color.Red;//paint the text to the winning color
             }
             else
             {
