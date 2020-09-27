@@ -24,7 +24,7 @@ class BasicGame : Game
     int rodespelerlevens;
     int blauwespelerlevens;
 
-    int spelerlevens = 1;
+    int spelerlevens = 3;
 
     string mesStart = "Press (SPACE) to continue";//message to display at start of the game
     string mesGameOver = "GAME OVER";//message to display at end of the game
@@ -114,11 +114,9 @@ class BasicGame : Game
         gameovermesloc = new Vector2(
             (graphics.PreferredBackBufferWidth - stringsize(font, mesGameOver).X) / 2,
             graphics.PreferredBackBufferHeight / 2 - stringsize(font, mesGameOver).Y);//the location to draw the "GameOver" of GameState1
-        /*
-        winmesloc = new Vector2(
-            (graphics.PreferredBackBufferWidth - stringsize(font, outmes).X) / 2,
-            graphics.PreferredBackBufferHeight / 2);//the location to draw the winmessage of GameState1
-        */
+        
+        
+        
         nextbluelifepos = new Vector2(0, 0);//location of the next life of blue
         nextredlifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);//location of the next life of red
 
@@ -262,6 +260,9 @@ class BasicGame : Game
                 mesColor = Color.Blue;
             }
             outmes = mesPlayer + mesHasWon; // put together the final message
+            winmesloc = new Vector2(
+                (graphics.PreferredBackBufferWidth - stringsize(font, outmes).X) / 2,
+                graphics.PreferredBackBufferHeight / 2);//the location to draw the winmessage of GameState1
         }
         if (GameState != 0)// don't move the ball if not playing
         {
