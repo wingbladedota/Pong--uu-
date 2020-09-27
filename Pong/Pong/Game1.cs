@@ -28,7 +28,16 @@ class BasicGame : Game
     string mesGameOver = "GAME OVER";//message to display at end of the game
     string mesHasWon = " has defeated his opponent";//win message
     string mesPlayer; // var to store the winning player
-    Color mesColor;
+    string outmes; // outputmessage of winning player
+    Color mesColor;// messageColor of winning player
+
+
+    float ballwidth;//store the width of the ball to be able to draw the lives next to each other
+    Vector2 startmesloc;//the location to draw the text of GameState-1
+    Vector2 gameovermesloc;//the location to draw the "GameOver" of GameState1
+    Vector2 winmesloc;//the location to draw the winmessage of GameState1
+    Vector2 nextbluelifepos;//location of the next life of blue
+    Vector2 nextredlifepos;//location of the next life of red
 
 
     SpriteFont font; // store the font to be used for messages
@@ -208,13 +217,29 @@ class BasicGame : Game
             GameState = 1;
         }
 
-        if (keyboardState.IsKeyDown(Keys.Space))
+        if (keyboardState.IsKeyDown(Keys.Space))//when space is pressed
         {
-            GameState = 0;
-            rodespelerlevens = 3;
-            blauwespelerlevens = 3;
-            BallSetup();
+            GameState = 0;//set PLAYING-state
+            rodespelerlevens = 3;// reset red lives
+            blauwespelerlevens = 3;// reset blue lives
+            BallSetup();// reset the ball
         }
+        if (GameState == 1)
+        {
+            if (rodespelerlevens > blauwespelerlevens)// who has won?; set values accordingly
+            {
+                string mesPlayer = "red";
+                Color mesColor = Color.Red;
+            }
+            else
+            {
+                string mesPlayer = "blue";
+                Color mesColor = Color.Blue;
+            }
+            string outmes = mesPlayer + mesHasWon; // put together the final message
+        }
+
+
     }
 
     protected override void Draw(GameTime gameTime)
@@ -223,8 +248,8 @@ class BasicGame : Game
         Vector2 startmesloc = new Vector2(0,0);//the location to draw the text of GameState-1
         Vector2 gameovermesloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2 - 20);//the location to draw the "GameOver" of GameState1
         Vector2 winmesloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2);//the location to draw the winmessage of GameState1
-        Vector2 nextbluelifepos = new Vector2(0, 0);
-        Vector2 nextredlifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);
+        Vector2 nextbluelifepos = new Vector2(0, 0);//location of the next life of blue
+        Vector2 nextredlifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);//location of the next life of red
 
 
         if (GameState == 0) // Draw the PLAYING-state
@@ -268,20 +293,10 @@ class BasicGame : Game
             GraphicsDevice.Clear(Color.Black);
             
             spriteBatch.Begin();
-
             spriteBatch.DrawString(font, "GAME OVER", gameovermesloc, Color.White);
-
-            if (rodespelerlevens > blauwespelerlevens){// who has won; set values accordingly
-                string mesPlayer = "red";
-                Color mesColor = Color.Red;
-            }else{
-                string mesPlayer = "blue";
-                Color mesColor = Color.Blue;
-            }
-            string output = mesPlayer + mesHasWon; // put together the final message
-            spriteBatch.DrawString(font, output, winmesloc, mesColor); // draw the haswon message on screen
+            spriteBatch.DrawString(font, outmes, winmesloc, mesColor); // draw the haswon message on screen
             Console.WriteLine(mesColor);
-            Console.WriteLine(output);
+            Console.WriteLine(outmes);
             Console.WriteLine(winmesloc);
             spriteBatch.End();
             // doIExist
