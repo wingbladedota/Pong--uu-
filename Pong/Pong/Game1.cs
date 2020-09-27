@@ -29,7 +29,7 @@ class BasicGame : Game
 
     string mesStart = "Press (SPACE) to continue";//message to display at start of the game
     string mesGameOver = "GAME OVER";//message to display at end of the game
-    string mesHasWon = " has defeated his opponent";//win message
+    string mesHasWon = " has defeated it's opponent";//win message
     string mesPlayer; // var to store the winning player
     Color mesColor;
 
