@@ -219,6 +219,7 @@ class BasicGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
+        float ballwidth = bal.Width;//store the width of the ball to be able to draw the lives next to each other
         Vector2 startmesloc = new Vector2(0,0);//the location to draw the text of GameState-1
         Vector2 gameovermesloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2 - 20);//the location to draw the "GameOver" of GameState1
         Vector2 winmesloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2);//the location to draw the winmessage of GameState1
@@ -237,7 +238,7 @@ class BasicGame : Game
             spriteBatch.Draw(blauweSpeler, blauweSpelerPosition);
             
             
-            float ballwidth = bal.Width;//store the width of the ball to be able to draw the lives next to each other
+            
             for (int i = 0; i < blauwespelerlevens; i++) //go through the number of lives of blue
             {
                 spriteBatch.Draw(bal, nextbluelifepos); //draw the next life at it's position
@@ -274,13 +275,16 @@ class BasicGame : Game
                 string mesPlayer = "red";
                 Color mesColor = Color.Red;
             }else{
-                string mesPlayer = "red";
-                Color mesColor = Color.Red;
+                string mesPlayer = "blue";
+                Color mesColor = Color.Blue;
             }
             string output = mesPlayer + mesHasWon; // put together the final message
             spriteBatch.DrawString(font, output, winmesloc, mesColor); // draw the haswon message on screen
+            Console.WriteLine(mesColor);
+            Console.WriteLine(output);
+            Console.WriteLine(winmesloc);
             spriteBatch.End();
-            
+            // doIExist
         }
     }
 }
