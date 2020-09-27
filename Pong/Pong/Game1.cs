@@ -2,24 +2,25 @@
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Pong;
 
 class BasicGame : Game
 {
+    //Als de game groter was, dan had ik een gameobject en spritegameobject class gemaakt waarvan ik de spelers, ballen, en levens zou laten inheriten, maar het maken van die classes
+    //kost meer tijd dan het maken van de hele game op deze manier.
     //sorry voor de magic numbers, maar dit soort opdrachten zijn gewoon veel sneller met wat hardcode
     GraphicsDeviceManager graphics;
     SpriteBatch spriteBatch;
     Texture2D blauweSpeler, rodeSpeler, bal;
     Vector2 ballPosition, blauweSpelerPosition, rodeSpelerPosition, ballSpeed;
-    float paddleSpeed = 10;
-    //bandaid way of generating a random decimal instead of integer
-    float totalBallSpeed = 500;
-    float actualTotalBallSpeed;
+    float paddleSpeed = 10; //snelheid van de paddles
+    float totalBallSpeed = 500;    //bandaid way of generating a random decimal instead of integer
+    float actualTotalBallSpeed; 
     Random random;
-    int randomMod;
-    // GameState
+    int randomMod; //zodat de snelheid zowel positief als negatief kan zijn
     int GameState;// Start = -1, Playing = 0, GameOver = 1
-    
-    int ballOffset = 3;
+
+    int ballOffset = 3;//de y-snelheid die je de bal meegeeft als je hem op het randje van je paddle raakt
 
     int rodespelerlevens = 3;
     int blauwespelerlevens = 3;
@@ -46,8 +47,6 @@ class BasicGame : Game
         actualTotalBallSpeed = totalBallSpeed / 100;
         Content.RootDirectory = "Content";
         graphics = new GraphicsDeviceManager(this);
-
-
     }
 
     protected override void LoadContent()
@@ -58,7 +57,7 @@ class BasicGame : Game
         rodeSpeler = Content.Load<Texture2D>("rodeSpeler");
         bal = Content.Load<Texture2D>("bal");
         font = Content.Load<SpriteFont>("gameover");
-        BallSetup();
+        BallSetup();//de functie die de positie van de paddles, bal, en de richting van de bal geeft. Dat de peddles ook resetten is bewust gedaan
     }
 
     protected void BallSetup()
@@ -68,7 +67,8 @@ class BasicGame : Game
         rodeSpelerPosition = new Vector2(graphics.PreferredBackBufferWidth - rodeSpeler.Width, graphics.PreferredBackBufferHeight / 2 - rodeSpeler.Height / 2);
         random = new Random();
         randomMod = random.Next(-1000, 1000);
-        ballSpeed.Y = (float)random.Next((int)-totalBallSpeed, (int)totalBallSpeed) / 150;
+        ballSpeed.Y = (float)random.Next((int)-totalBallSpeed, (int)totalBallSpeed) / 150; //de Y heeft een random snelheid, en de x krijgt "wat over is" en dan random of het positief of
+        //negatief is
         if (ballSpeed.Y >= 0)
             ballSpeed.X = (actualTotalBallSpeed - ballSpeed.Y);
         if (ballSpeed.Y < 0)
@@ -130,7 +130,6 @@ class BasicGame : Game
         }
         if (ballPosition.X < 0)
         {
-            //GAME OVER STATE ALS LEVENS OP ZIJN
             blauwespelerlevens--;
             BallSetup();
 
@@ -138,7 +137,6 @@ class BasicGame : Game
         }
         if (ballPosition.X > graphics.PreferredBackBufferWidth - bal.Width)
         {
-            //GAME OVER STATE
             rodespelerlevens--;
             BallSetup();
 
@@ -151,19 +149,19 @@ class BasicGame : Game
                 if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y -= ballOffset;
                 }
                 else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height / 3 * 2)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
 
                 }
                 else if (ballPosition.Y < rodeSpelerPosition.Y + rodeSpeler.Height)
                 {
                     ballPosition.X = rodeSpelerPosition.X - bal.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y += ballOffset;
                 }
             }
@@ -176,19 +174,19 @@ class BasicGame : Game
                 if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y -= ballOffset;
                 }
                 else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height / 3 * 2)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
 
                 }
                 else if (ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
                 {
                     ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-                    ballSpeed.X *= -1.1f;
+                    ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
                     ballSpeed.Y += ballOffset;
                 }
             }
@@ -200,7 +198,7 @@ class BasicGame : Game
             ballPosition.Y < blauweSpelerPosition.Y + blauweSpeler.Height)
         {
             ballPosition.X = blauweSpelerPosition.X + blauweSpeler.Width;
-            ballSpeed.X *= -1.1f;
+            ballSpeed.X *= -1.1f;//balletje gaat sneller met elke bounce
 
         }
         if (rodespelerlevens < 0 || blauwespelerlevens < 0)
@@ -257,7 +255,6 @@ class BasicGame : Game
 
         if (GameState == -1) //draw the BEGINstate
         {
-            Vector2 Startmessageloc = new Vector2();
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
             spriteBatch.DrawString(font, mesStart, startmesloc, Color.Black);
@@ -272,10 +269,10 @@ class BasicGame : Game
             spriteBatch.DrawString(font, "GAME OVER", gameovermesloc, Color.White);
 
             if (rodespelerlevens > blauwespelerlevens){// who has won; set values accordingly
-                string mesPlayer = "red";
+                mesPlayer = "red";
                 Color mesColor = Color.Red;
             }else{
-                string mesPlayer = "blue";
+                mesPlayer = "blue";
                 Color mesColor = Color.Blue;
             }
             string output = mesPlayer + mesHasWon; // put together the final message

@@ -7,8 +7,10 @@
     <File>C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/bal.png</File>
     <File>C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/blauweSpeler.png</File>
     <File>C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/rodeSpeler.png</File>
+    <File>C:/Users/mnoplbnaikj/Desktop/huiswerk/Pong/Pong/Pong/Content/gameover.spritefont</File>
   </SourceFiles>
   <DestFiles>
+    <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
     <File xsi:nil="true" />
