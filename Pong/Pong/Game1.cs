@@ -15,11 +15,21 @@ class BasicGame : Game
     float totalBallSpeed = 500;
     float actualTotalBallSpeed;
     Random random;
-    int randomMod, GameState;
+    int randomMod;
+    // GameState
+    int GameState;// Start = -1, Playing = 0, GameOver = 1
+    
     int ballOffset = 3;
 
     int rodespelerlevens = 3;
     int blauwespelerlevens = 3;
+
+    string mesStart = "Press (SPACE) to continue";//message to display at start of the game
+    string mesGameOver = "GAME OVER";//message to display at end of the game
+    string mesHasWon = " has defeated his opponent";//win message
+    string mesPlayer;
+    Color mesColor;
+
 
     SpriteFont font;
 
@@ -47,7 +57,7 @@ class BasicGame : Game
         blauweSpeler = Content.Load<Texture2D>("blauweSpeler");
         rodeSpeler = Content.Load<Texture2D>("rodeSpeler");
         bal = Content.Load<Texture2D>("bal");
-        font = Content.Load<SpriteFont>("GameOver");
+        font = Content.Load<SpriteFont>("gameover");
         BallSetup();
     }
 
@@ -67,7 +77,7 @@ class BasicGame : Game
         {
             ballSpeed.X *= -1;
         }
-        Console.WriteLine(ballSpeed);
+        
     }
 
     protected override void Update(GameTime gameTime)
@@ -209,51 +219,66 @@ class BasicGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        if (GameState == 0)
+        Vector2 gameoverloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2 - 20);
+        Vector2 othertextloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2);
+        Vector2 nextbluelifepos = new Vector2(0, 0);
+        Vector2 nextredlifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);
+
+
+        if (GameState == 0) // Draw the PLAYING-state
         {
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
+            // draw the gameobjects at their respective positions
             spriteBatch.Draw(bal, ballPosition);
             spriteBatch.Draw(rodeSpeler, rodeSpelerPosition);
             spriteBatch.Draw(blauweSpeler, blauweSpelerPosition);
-            Vector2 nextredlifepos = new Vector2(0, 0);
+            
+            
+            float ballwidth = bal.Width;//store the width of the ball to be able to draw the lives next to each other
+            for (int i = 0; i < blauwespelerlevens; i++) //go through the number of lives of blue
+            {
+                spriteBatch.Draw(bal, nextbluelifepos); //draw the next life at it's position
+                nextbluelifepos = new Vector2(nextbluelifepos.X + ballwidth, 0); // calculate the next position
 
-            float ballwidth = bal.Width;
+            }
+            
             for (int i = 0; i < rodespelerlevens; i++)
             {
                 spriteBatch.Draw(bal, nextredlifepos);
-                nextredlifepos = new Vector2(nextredlifepos.X + ballwidth, 0);
+                nextredlifepos = new Vector2(nextredlifepos.X - ballwidth, 0); //calculate the next position in reverse X
             }
-            Vector2 nextbluelifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);
-            for (int i = 0; i < blauwespelerlevens; i++)
-            {
-                spriteBatch.Draw(bal, nextbluelifepos);
-                nextbluelifepos = new Vector2(nextbluelifepos.X - ballwidth, 0);
-            }
+
             spriteBatch.End();
         }
-        if (GameState == -1)
+
+        if (GameState == -1) //draw the BEGINstate
         {
+            Vector2 Startmessageloc = new Vector2();
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
+            spriteBatch.DrawString(font, mesStart, othertextloc, Color.Black);
             spriteBatch.End();
         }
-        if (GameState == 1)
+        if (GameState == 1) //draw the GAMEOVER-state
         {
             GraphicsDevice.Clear(Color.Black);
+            
             spriteBatch.Begin();
-            Vector2 gameoverlocation = new Vector2(0, graphics.PreferredBackBufferHeight/2 + 50);
-            Vector2 othertextloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2);
-            spriteBatch.DrawString(font, "GAME OVER", fontlocation, Color.White);
-            if (rodespelerlevens > blauwespelerlevens)
-            {
-                spriteBatch.DrawString(font, "red has won", othertextloc, Color.Red);
+
+            spriteBatch.DrawString(font, "GAME OVER", gameoverloc, Color.White);
+
+            if (rodespelerlevens > blauwespelerlevens){// who has won; set values accordingly
+                string mesPlayer = "red";
+                Color mesColor = Color.Red;
+            }else{
+                string mesPlayer = "red";
+                Color mesColor = Color.Red;
             }
-            else
-            {
-                spriteBatch.DrawString(font, "blue has won", othertextloc, Color.Blue);
-            }
+            string output = mesPlayer + mesHasWon; // put together the final message
+            spriteBatch.DrawString(font, output, othertextloc, mesColor); // draw the haswon message on screen
             spriteBatch.End();
+            
         }
     }
 }

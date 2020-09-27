@@ -49,18 +49,10 @@
 /processorParam:TextureFormat=Color
 /build:rodeSpeler.png
 
-#begin game_over.spritefont
+#begin gameover.spritefont
 /importer:FontDescriptionImporter
 /processor:FontDescriptionProcessor
 /processorParam:PremultiplyAlpha=True
 /processorParam:TextureFormat=Compressed
-/build:game_over.spritefont
-
-#begin game_over.ttf
-/importer:FontDescriptionImporter
-/processor:FontTextureProcessor
-/processorParam:FirstCharacter= 
-/processorParam:PremultiplyAlpha=True
-/processorParam:TextureFormat=Color
-/build:game_over.ttf
+/build:gameover.spritefont
 
