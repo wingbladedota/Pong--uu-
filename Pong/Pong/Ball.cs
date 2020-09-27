@@ -10,8 +10,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Pong
 {
-    class Ball : GameObject
+    class Ball : Pong
     {
+        public Texture2D sprite;
+        public float Speed { get; protected set; }
+        public Vector2 Position;
+        public Vector2 Size;
         public Ball()
         {
             Speed = 1;

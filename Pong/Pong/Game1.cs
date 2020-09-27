@@ -12,12 +12,10 @@ namespace Pong
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
 
+        public Player p1;
+        public Player p2;
+        public Ball ball;
 
-        Player p1 = new Player();
-        Player p2 = new Player();
-
-        Ball ball = new Ball();
-  
 
         public Color Background { get; private set; }
         public Vector2 WindowSize;
@@ -32,6 +30,7 @@ namespace Pong
         {
             Pong game = new Pong();
             game.Run();
+
         }
         
         public Pong()
@@ -41,17 +40,21 @@ namespace Pong
             Background = Color.White;
             WindowSize = new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight);
             center = new Vector2(WindowSize.X / 2, WindowSize.Y / 2);
+
+            Player p1 = new Player();
+            Player p2 = new Player();
+            Ball ball = new Ball();
         }
 
         protected override void LoadContent()
         {
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            p2.sprite = Content.Load<Texture2D>("blauweSpeler");
-            p1.sprite = Content.Load<Texture2D>("rodeSpeler");
-            ball.sprite = Content.Load<Texture2D>("bal");
-            ball.Position = center;
-            p2.Position = new Vector2(0, WindowSize.Y / 2 - p2.Size.Y / 2);
-            p1.Position = new Vector2(WindowSize.X - p1.Size.X, WindowSize.Y / 2 - p1.Size.Y / 2);
+            this.p2.sprite = Content.Load<Texture2D>("blauweSpeler");
+            this.p1.sprite = Content.Load<Texture2D>("rodeSpeler");
+            this.ball.sprite = Content.Load<Texture2D>("bal");
+            this.ball.Position = center;
+            this.p2.Position = new Vector2(0, WindowSize.Y / 2 - p2.Size.Y / 2);
+            this.p1.Position = new Vector2(WindowSize.X - p1.Size.X, WindowSize.Y / 2 - p1.Size.Y / 2);
 
         }
 
@@ -86,8 +89,8 @@ namespace Pong
             spriteBatch.Draw(ball.sprite, ball.Position);
             spriteBatch.Draw(p1.sprite, p1.Position);
             spriteBatch.Draw(p2.sprite, p2.Position);
-            DrawLives(p1);
-            DrawLives(p2);
+            //DrawLives(p1);
+            //DrawLives(p2);
             spriteBatch.End();
 
 

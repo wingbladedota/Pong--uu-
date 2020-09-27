@@ -11,13 +11,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace Pong
 {
-    class Player : GameObject
+    class Player : Pong
     {
         public Vector2 Size { get; set; }
 
         public string direction;
 
-        private Vector2 WindowSize = Pong.WindowSize;
+        public Texture2D sprite;
+        public float Speed { get; protected set; }
+        public Vector2 Position;
 
         private byte life;
         public byte Life
@@ -46,7 +48,7 @@ namespace Pong
             if (direction == "down")
             {
                 newPos = this.Position.Y - this.Speed;
-                if (newPos >= Pong.WindowSize.Y)// check if player within bounds
+                if (newPos >= WindowSize.Y)// check if player within bounds
                 {
                     this.Position.Y = newPos;
                     return true;
@@ -71,7 +73,6 @@ namespace Pong
         {
             this.Speed = 10.0f;
             this.Position = new Vector2(0, 0);
-
         }
     }
 
