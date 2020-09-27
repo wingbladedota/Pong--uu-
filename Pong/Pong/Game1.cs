@@ -27,11 +27,11 @@ class BasicGame : Game
     string mesStart = "Press (SPACE) to continue";//message to display at start of the game
     string mesGameOver = "GAME OVER";//message to display at end of the game
     string mesHasWon = " has defeated his opponent";//win message
-    string mesPlayer;
+    string mesPlayer; // var to store the winning player
     Color mesColor;
 
 
-    SpriteFont font;
+    SpriteFont font; // store the font to be used for messages
 
 
     [STAThread]
@@ -219,8 +219,9 @@ class BasicGame : Game
 
     protected override void Draw(GameTime gameTime)
     {
-        Vector2 gameoverloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2 - 20);
-        Vector2 othertextloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2);
+        Vector2 startmesloc = new Vector2(0,0);//the location to draw the text of GameState-1
+        Vector2 gameovermesloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2 - 20);//the location to draw the "GameOver" of GameState1
+        Vector2 winmesloc = new Vector2(0, graphics.PreferredBackBufferHeight / 2);//the location to draw the winmessage of GameState1
         Vector2 nextbluelifepos = new Vector2(0, 0);
         Vector2 nextredlifepos = new Vector2(graphics.PreferredBackBufferWidth - ballwidth, 0);
 
@@ -229,6 +230,7 @@ class BasicGame : Game
         {
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
+
             // draw the gameobjects at their respective positions
             spriteBatch.Draw(bal, ballPosition);
             spriteBatch.Draw(rodeSpeler, rodeSpelerPosition);
@@ -257,7 +259,7 @@ class BasicGame : Game
             Vector2 Startmessageloc = new Vector2();
             GraphicsDevice.Clear(Color.White);
             spriteBatch.Begin();
-            spriteBatch.DrawString(font, mesStart, othertextloc, Color.Black);
+            spriteBatch.DrawString(font, mesStart, startmesloc, Color.Black);
             spriteBatch.End();
         }
         if (GameState == 1) //draw the GAMEOVER-state
@@ -266,7 +268,7 @@ class BasicGame : Game
             
             spriteBatch.Begin();
 
-            spriteBatch.DrawString(font, "GAME OVER", gameoverloc, Color.White);
+            spriteBatch.DrawString(font, "GAME OVER", gameovermesloc, Color.White);
 
             if (rodespelerlevens > blauwespelerlevens){// who has won; set values accordingly
                 string mesPlayer = "red";
@@ -276,7 +278,7 @@ class BasicGame : Game
                 Color mesColor = Color.Red;
             }
             string output = mesPlayer + mesHasWon; // put together the final message
-            spriteBatch.DrawString(font, output, othertextloc, mesColor); // draw the haswon message on screen
+            spriteBatch.DrawString(font, output, winmesloc, mesColor); // draw the haswon message on screen
             spriteBatch.End();
             
         }
