@@ -5,9 +5,7 @@ namespace Pong
 {
     class GameObject
     {
-        public Texture2D sprite;
-        public float Speed { get; protected set; }
-        public Vector2 Position;
-        public Vector2 Size;
+     
+
     }
 }

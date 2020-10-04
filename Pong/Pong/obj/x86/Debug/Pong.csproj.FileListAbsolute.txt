@@ -33,7 +33,6 @@ C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Conten
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Content\Content\rodeSpeler.xnb
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Content\bal.xnb
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Content\blauweSpeler.xnb
-C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Content\game_over.xnb
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Content\rodeSpeler.xnb
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Pong.exe
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Pong.pdb
@@ -56,3 +55,4 @@ C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\SharpD
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\SharpDX.XInput.xml
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\SharpDX.Direct3D9.xml
 C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\obj\x86\Debug\Pong.csproj.CopyComplete
+C:\Users\admin\Documents\GitHub\Pong--uu-\Pong\Pong\bin\Windows\x86\Debug\Content\gameover.xnb
